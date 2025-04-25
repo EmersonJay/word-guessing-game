@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Browser Environment Dashboard</title>
+  <style>
+    /* Your existing CSS styling */
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Profile Information -->
+    <header>
+      <h1>Student Profile</h1>
+      <p><strong>Name:</strong> Emerson Jay C. Ricate</p>
+      <p><strong>Sex:</strong> Male</p>
+      <p><strong>Address:</strong> Danlog San Jose, Camarines Sur</p>
+      <p><strong>Course, Year, and Section:</strong> BSIT 2B</p>
+      <p><strong>Name of School:</strong> Partido State University</p>
+      <p><strong>Semester and Academic Year:</strong> 2nd Semester, AY 2024–2025</p>
+      <p><strong>Subject Code and Title:</strong> PF2-Event Driven Programming</p>
+      <p><strong>Name of Subject Instructor:</strong> Arjay F. Abio</p>
+    </header>
+
+    <!-- Browser Information -->
+    <div class="section" id="browser-info">
+      <h2>Browser Information</h2>
+      <p id="browserDetails"></p>
+    </div>
+
+    <!-- Page Information & Controls -->
+    <div class="section" id="page-info">
+      <h2>Page Information & Controls</h2>
+      <p><strong>Current URL:</strong> <span id="currentURL"></span></p>
+      <p><strong>Hostname:</strong> <span id="hostname"></span></p>
+      <p><strong>Page Title:</strong> <span id="pageTitleDisplay"></span></p>
+      <button id="changeTitleBtn">Change Page Title</button>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="section" id="navigation-controls">
+      <h2>Navigation Controls</h2>
+      <button id="reloadBtn">Reload Page</button>
+      <button id="backBtn">Go Back</button>
+      <button id="forwardBtn">Go Forward</button>
+    </div>
+  </div>
+
+  <script>
+    // Function to display browser info
+    function displayBrowserInfo() {
+      var browserName = navigator.appName;
+      var browserVersion = navigator.appVersion;
+      var platform = navigator.platform;
+      var javaEnabled = navigator.javaEnabled();
+      var screenWidth = screen.width;
+      var screenHeight = screen.height;
+      var availWidth = screen.availWidth;
+      var availHeight = screen.availHeight;
+      var colorDepth = screen.colorDepth;
+
+      var info = "<strong>Browser Name:</strong> " + browserName + "<br>" +
+                 "<strong>Browser Version:</strong> " + browserVersion + "<br>" +
+                 "<strong>Platform (OS):</strong> " + platform + "<br>" +
+                 "<strong>Java Enabled:</strong> " + javaEnabled + "<br>" +
+                 "<strong>Screen Resolution:</strong> " + screenWidth + " x " + screenHeight + "<br>" +
+                 "<strong>Available Screen Size:</strong> " + availWidth + " x " + availHeight + "<br>" +
+                 "<strong>Color Depth:</strong> " + colorDepth;
+
+      document.getElementById('browserDetails').innerHTML = info;
+    }
+
+    // Function to display page info
+    function displayPageInfo() {
+      document.getElementById('currentURL').textContent = location.href;
+      document.getElementById('hostname').textContent = location.hostname;
+      document.getElementById('pageTitleDisplay').textContent = document.title;
+    }
+
+    // Event listener for changing the page title
+    document.getElementById('changeTitleBtn').addEventListener('click', function() {
+      var newTitle = prompt("Enter a new page title:");
+      if(newTitle !== null && newTitle.trim() !== "") {
+        document.title = newTitle;
+        document.getElementById('pageTitleDisplay').textContent = newTitle;
+      }
+    });
+
+    // Navigation control event listeners
+    document.getElementById('reloadBtn').addEventListener('click', function() {
+      location.reload();
+    });
+
+    // Go Back button functionality
+    document.getElementById('backBtn').addEventListener('click', function() {
+      location.href = "index.html"; // Redirect to homepage
+    });
+
+    // Go Forward button functionality
+    document.getElementById('forwardBtn').addEventListener('click', function() {
+      history.forward();
+    });
+
+    // Function to set background color based on screen width
+    function setDynamicBackground() {
+      var width = window.innerWidth;
+      if (width < 600) {
+        document.body.className = "mobile"; // Mobile
+      } else if (width >= 600 && width < 992) {
+        document.body.className = "tablet"; // Tablet
+      } else {
+        document.body.className = "desktop"; // Desktop
+      }
+    }
+
+    // Initial setup
+    displayBrowserInfo();
+    displayPageInfo();
+    setDynamicBackground();
+
+    // Update background dynamically when window is resized
+    window.addEventListener('resize', setDynamicBackground);
+  </script>
+</body>
+</html>

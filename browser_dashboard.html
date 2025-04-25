@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--
+  README:
+  This file (browser_dashboard.html) is the Browser Environment Dashboard. It displays personal profile information at the top and then uses JavaScript browser objects to show browser details (browser name/version, platform, Java enabled, screen resolution, available screen size, and color depth). It further shows page information like the current URL, hostname, and page title, with the ability for the user to change the page title. Additional buttons let the user reload the page and navigate through the browser history. The page background color updates dynamically based on the screen width on load and on window resize.
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Browser Environment Dashboard</title>
+  <style>
+    /* General body and layout styling */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    /* Centering the content and giving it a card-like look */
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 2rem;
+      background-color: #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    /* Header Styling */
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    header p {
+      margin: 5px 0;
+    }
+
+    /* Section Styling */
+    .section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    /* Button Styling */
+    .section button {
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s;
+    }
+
+    .section button:hover {
+      background-color: #0056b3;
+    }
+
+    .section button:active {
+      background-color: #003d75;
+    }
+
+    /* Styling for dynamic background */
+    .mobile { background-color: #cce5ff; }
+    .tablet { background-color: #d4edda; }
+    .desktop { background-color: #fff3cd; }
+
+    /* Responsive Styles */
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .container {
+        padding: 1rem;
+      }
+
+      .section {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Profile Information -->
+    <header>
+      <h1>Student Profile</h1>
+      <p><strong>Name:</strong> Emerson Jay C. Ricate</p>
+      <p><strong>Sex:</strong> Male</p>
+      <p><strong>Address:</strong> Danlog San Jose, Camarines Sur</p>
+      <p><strong>Course, Year, and Section:</strong> BSIT 2B</p>
+      <p><strong>Name of School:</strong>Partido State University</p>
+      <p><strong>Semester and Academic Year:</strong> 2nd Semester, AY 2024–2025</p>
+      <p><strong>Subject Code and Title: PF2-Event Driven Programming </strong> </p>
+      <p><strong>Name of Subject Instructor:</strong> Arjay F. Abio</p>
+    </header>
+
+    <!-- Browser Information -->
+    <div class="section" id="browser-info">
+      <h2>Browser Information</h2>
+      <p id="browserDetails"></p>
+    </div>
+
+    <!-- Page Information & Controls -->
+    <div class="section" id="page-info">
+      <h2>Page Information & Controls</h2>
+      <p><strong>Current URL:</strong> <span id="currentURL"></span></p>
+      <p><strong>Hostname:</strong> <span id="hostname"></span></p>
+      <p><strong>Page Title:</strong> <span id="pageTitleDisplay"></span></p>
+      <button id="changeTitleBtn">Change Page Title</button>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="section" id="navigation-controls">
+      <h2>Navigation Controls</h2>
+      <button id="reloadBtn">Reload Page</button>
+      <button id="backBtn">Go Back</button>
+      <button id="forwardBtn">Go Forward</button>
+    </div>
+  </div>
+
+  <script>
+    // Function to display browser info using navigator and screen objects
+    function displayBrowserInfo() {
+      var browserName = navigator.appName;
+      var browserVersion = navigator.appVersion;
+      var platform = navigator.platform;
+      var javaEnabled = navigator.javaEnabled();
+      var screenWidth = screen.width;
+      var screenHeight = screen.height;
+      var availWidth = screen.availWidth;
+      var availHeight = screen.availHeight;
+      var colorDepth = screen.colorDepth;
+
+      var info = "<strong>Browser Name:</strong> " + browserName + "<br>" +
+                 "<strong>Browser Version:</strong> " + browserVersion + "<br>" +
+                 "<strong>Platform (OS):</strong> " + platform + "<br>" +
+                 "<strong>Java Enabled:</strong> " + javaEnabled + "<br>" +
+                 "<strong>Screen Resolution:</strong> " + screenWidth + " x " + screenHeight + "<br>" +
+                 "<strong>Available Screen Size:</strong> " + availWidth + " x " + availHeight + "<br>" +
+                 "<strong>Color Depth:</strong> " + colorDepth;
+
+      document.getElementById('browserDetails').innerHTML = info;
+    }
+
+    // Function to display page info using document, location, and window objects
+    function displayPageInfo() {
+      document.getElementById('currentURL').textContent = location.href;
+      document.getElementById('hostname').textContent = location.hostname;
+      document.getElementById('pageTitleDisplay').textContent = document.title;
+    }
+
+    // Event listener for changing the page title.
+    document.getElementById('changeTitleBtn').addEventListener('click', function() {
+      var newTitle = prompt("Enter a new page title:");
+      if(newTitle !== null && newTitle.trim() !== ""){
+        document.title = newTitle;
+        document.getElementById('pageTitleDisplay').textContent = newTitle;
+      }
+    });
+
+    // Navigation control event listeners
+    document.getElementById('reloadBtn').addEventListener('click', function() {
+      location.reload();
+    });
+
+    document.getElementById('backBtn').addEventListener('click', function() {
+      history.back();
+    });
+
+    document.getElementById('forwardBtn').addEventListener('click', function() {
+      history.forward();
+    });
+
+    // Function to set background color based on screen width
+    function setDynamicBackground() {
+      var width = window.innerWidth;
+      if (width < 600) {
+        document.body.className = "mobile"; // Mobile
+      } else if (width >= 600 && width < 992) {
+        document.body.className = "tablet"; // Tablet
+      } else {
+        document.body.className = "desktop"; // Desktop
+      }
+    }
+
+    // Initial display of information and setting background on page load
+    displayBrowserInfo();
+    displayPageInfo();
+    setDynamicBackground();
+
+    // Update background dynamically when window is resized
+    window.addEventListener('resize', setDynamicBackground);
+
+  </script>
+</body>
+</html>
